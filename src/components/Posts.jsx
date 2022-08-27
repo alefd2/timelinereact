@@ -17,23 +17,30 @@ export const Posts = ({ author, content, publishedAt }) => {
         'Post muito bacana, show de bola!'
     ]);
 
-    const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'",
-        { locale: ptBR, });
-    const publishedDateRelativeNow = formatDistanceToNow(publishedAt, {
-        locale: ptBR,
-        addSuffix: true
-    })
-
     function handleCreateNewComment() {
         event.preventDefault();
 
         setComments([...comments, newCommentText]);
+
+        // Aplicaç~ao real deveria enviar para o banco aqui !
+        // e depois zerar o estado do textarea
+
+        // pushMethod();
+
         setNewCommentText('');
     }
 
     function handleNewCommentChange() {
         setNewCommentText(event.target.value);
     }
+
+
+    const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'",
+        { locale: ptBR, });
+    const publishedDateRelativeNow = formatDistanceToNow(publishedAt, {
+        locale: ptBR,
+        addSuffix: true
+    })
 
     return (
         <article className={styles.post}>

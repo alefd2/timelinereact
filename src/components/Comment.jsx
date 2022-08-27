@@ -3,6 +3,11 @@ import { Avatar } from './Avatar';
 import styles from './Comment.module.css';
 
 export const Comment = ({ content }) => {
+
+    const handleDeleteComment = () => {
+
+    }
+
     return (
         <div className={styles.comment}>
             <Avatar hasBorder={false} src="https://github.com/alefd2.png" />
@@ -20,7 +25,7 @@ export const Comment = ({ content }) => {
                     <p>{content}</p>
                 </div>
                 <footer>
-                    <button>
+                    <button onClick={handleDeleteComment}>
                         <ThumbsUp />
                         Aplaudir <span>20</span>
                     </button>
