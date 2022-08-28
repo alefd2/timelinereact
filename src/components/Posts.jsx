@@ -17,23 +17,36 @@ export const Posts = ({ author, content, publishedAt }) => {
         'Post muito bacana, show de bola!'
     ]);
 
-    function handleCreateNewComment() {
+    const handleCreateNewComment = () => {
         event.preventDefault();
 
         setComments([...comments, newCommentText]);
 
-        // Aplicaç~ao real deveria enviar para o banco aqui !
+        // Aplicação real deveria enviar para o banco aqui !
         // e depois zerar o estado do textarea
 
-        // pushMethod();
+        // ---> pushMethod();
 
         setNewCommentText('');
     }
 
-    function handleNewCommentChange() {
+    const handleNewCommentChange = () => {
+        event.target.setCustomValidity('')
         setNewCommentText(event.target.value);
     }
 
+    const handelNewCommentInvalid = () => {
+        event.target.setCustomValidity('Esse campo é obrigatório')
+    }
+
+
+    const deleteComment = (commentToDelete) => {
+        const commentsWithoutDeleteOne = comments.filter(comment => {
+            return comment !== commentToDelete;
+        })
+        //COnceito: imutabilidade o valor do setState não é atualizado diretamente
+        setComments(commentsWithoutDeleteOne);
+    }
 
     const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'",
         { locale: ptBR, });
@@ -41,6 +54,8 @@ export const Posts = ({ author, content, publishedAt }) => {
         locale: ptBR,
         addSuffix: true
     })
+
+    const isNewCommentEmpty = newCommentText.length === 0;
 
     return (
         <article className={styles.post}>
@@ -72,15 +87,23 @@ export const Posts = ({ author, content, publishedAt }) => {
                     placeholder='Deixe um comantário'
                     value={newCommentText}
                     onChange={handleNewCommentChange}
+                    onInvalid={handelNewCommentInvalid}
+                    required
                 />
                 <footer>
-                    <button type='submit'>Comentar</button>
+                    <button type='submit' disabled={isNewCommentEmpty}>Comentar</button>
                 </footer>
             </form>
             <div className={styles.commentList}>
                 {
                     comments.map(comment => {
-                        return <Comment key={comment} content={comment} />
+                        return (
+                            <Comment
+                                key={comment}
+                                content={comment}
+                                onDeleteComment={deleteComment}
+                            />
+                        )
                     })
                 }
             </div>
