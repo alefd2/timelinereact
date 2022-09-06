@@ -5,7 +5,7 @@ import igniteLogo from '../assets/ignite-logo.svg';
 export const Header = () => {
     return (
         <header className={styles.header}>
-            <img src={igniteLogo} alt="" srcset="" />
+            <img src={igniteLogo} alt=""/>
             <strong>Alef Feed</strong>
         </header>
     );
